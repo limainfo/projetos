@@ -237,63 +237,7 @@ if ( isset($_POST['controller']) &&($_POST['controller']=='movimento') && ($_POS
 
 
 if ( isset($_POST['controller']) &&($_POST['controller']=='movimento') && ($_POST['acao']=='vercad') ){
-	//header('Content-type: application/x-json');
-	$autocomplete_subdivisao = $db->fetch_array("select subdivisao from app_movimento group by data order by data asc ");
-	$completasubdivisao = '';
-	foreach($autocomplete_subdivisao as $indica=>$valor){
-		//$completasubdivisao .= "'".iconv('latin1', 'utf8', $valor['subdivisao'])."',"; 
-		$completasubdivisao .= "'".$valor['subdivisao']."',"; 
-	}
-	$completasubdivisao .= "''";
 
-	$autocomplete_ano = $db->fetch_array("select ano from app_movimento group by ano order by ano asc ");
-	$completaano = '';
-	foreach($autocomplete_ano as $indica=>$valor){
-		//$completastatus .= "'".iconv('latin1', 'utf8', $valor['status'])."',";
-		$completaano .= "'".$valor['ano']."',";
-	}
-	$completaano .= "''";
-	
-	$autocomplete_status = $db->fetch_array("select status from app_movimento group by status order by status asc ");
-	$completastatus = '';
-	foreach($autocomplete_status as $indica=>$valor){
-		//$completastatus .= "'".iconv('latin1', 'utf8', $valor['status'])."',"; 
-		$completastatus .= "'".$valor['status']."',"; 
-	}
-	$completastatus .= "''";
-
-	$autocomplete_tipo = $db->fetch_array("select tipo from app_movimento group by tipo order by tipo asc ");
-	$completatipo = '';
-	foreach($autocomplete_tipo as $indica=>$valor){
-		//$completatipo .= "'".iconv('latin1', 'utf8', $valor['tipo'])."',";
-		$completatipo .= "'".$valor['tipo']."',";
-	}
-	$completatipo .= "''";
-	
-	$autocomplete_descricao = $db->fetch_array("select descricao from app_movimento group by descricao order by descricao asc ");
-	$completadescricao = '';
-	foreach($autocomplete_descricao as $indica=>$valor){
-		//$completadescricao .= "'".iconv('latin1', 'utf8', $valor['descricao'])."',";
-		$completadescricao .= "'".$valor['descricao']."',";
-	}
-	$completadescricao .= "''";
-	
-	$autocomplete_local = $db->fetch_array("select local from app_movimento group by local order by local asc ");
-	$completalocal = '';
-	foreach($autocomplete_local as $indica=>$valor){
-		//$completalocal .= "'".iconv('latin1', 'utf8', $valor['local'])."',";
-		$completalocal .= "'".$valor['local']."',";
-	}
-	$completalocal .= "''";
-	
-	$autocomplete_mes = $db->fetch_array("select mes from app_movimento group by mes order by mes asc ");
-	$completames = '';
-	foreach($autocomplete_mes as $indica=>$valor){
-		//$completames .= "'".iconv('latin1', 'utf8', $valor['mes'])."',";
-		$completames .= "'".$valor['mes']."',";
-	}
-	$completames .= "''";
-	
 	include("view_movimento_cad.php");
 	//exit();
 }
@@ -805,6 +749,31 @@ if (isset($_POST['controller']) && ($_POST['controller']=='movimento') && ($_POS
 		//echo "Registro não pode ser cadastrado!";
 	}
 }
+
+if ( isset($_GET['controller']) &&($_GET['controller']=='movimento') && ($_GET['acao']=='upload') ){
+
+	$json = array();
+    if(!empty($_FILES['upl_file'])){ 
+        $dir = "./uploads/"; 
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx'); 
+        $fileName = basename($_FILES['upl_file']['name']); 
+        $filePath = $dir.$fileName; 
+        // Check whether file type is valid 
+        $fileType = pathinfo($filePath, PATHINFO_EXTENSION); 
+        if(in_array($fileType, $allowTypes)){ 
+            // Upload file to the server 
+            if(move_uploaded_file($_FILES['upl_file']['tmp_name'], $filePath)){ 
+                $json = 'success'; 
+            } else {
+                $json = 'failed';
+            }
+        } 
+    }
+    header('Content-Type: application/json');
+    echo json_encode($json);
+
+}
+
 if ( isset($_GET['controller']) &&($_GET['controller']=='movimento') && ($_GET['acao']=='relcompleto') ){
 	$status = 'OK';
 	$mensagemstatus = 'Registros ';
