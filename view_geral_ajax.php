@@ -55,11 +55,11 @@ function edita(id) {
 function cad() {
 	$( "#manipulacao" ).dialog({
 		autoOpen: false,
+		text: false,
 		title:'Cadastrar <?php echo $controllernome; ?>',
 		position: { my: "center", at: "center", of: window },
 		height: window.innerHeight * 10/10,
 		width: window.innerWidth * 6/10,
-		buttons: {option: function() {$(this).text = false;}},
 		modal: true,
 		closeText: "",
 		close: function() {
