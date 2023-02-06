@@ -526,7 +526,7 @@ if ( isset($_GET['controller']) && ($_GET['controller']=='movimento') && ($_GET[
 
 if (isset($_POST['controller']) && ($_POST['controller']=='movimento') && ($_POST['acao']=='verfiltro') ){
 	//header('Content-type: text/html');
-	include("view_movimento_filtro.php");
+	include("view_app_filtro.php");
 }
 
 if (isset($_POST['controller']) && ($_POST['controller']=='movimento') && ($_POST['acao']=='filtro') ){
