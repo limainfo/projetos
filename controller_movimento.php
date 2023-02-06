@@ -755,7 +755,7 @@ if ( isset($_GET['controller']) &&($_GET['controller']=='movimento') && ($_GET['
 	$json = array();
     if(!empty($_FILES['upl_file'])){ 
         $dir = "./uploads/"; 
-        $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx'); 
+        $allowTypes = array('txt'); 
         $fileName = basename($_FILES['upl_file']['name']); 
         $filePath = $dir.$fileName; 
         // Check whether file type is valid 
